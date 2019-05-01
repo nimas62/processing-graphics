@@ -19,6 +19,13 @@ int HEIGHT = 800;
 //float frame_rate = 3;
 
 
+//or
+
+//float serie_size = 1000;
+//float multiplier=300;
+//float step = 0.025;
+//float frame_rate = 30;
+
 float serie_size = 400;
 float multiplier=7;
 float step = 3;
@@ -79,7 +86,7 @@ void draw(){
   fill(255);
 
   stroke(0);
-  drawSerie(serie_size, WIDTH/2, WIDTH/2-100, multiplier);
+  drawSerie(serie_size, width/2, height/2-100, multiplier);
   textSize(32);
 
   noStroke();
