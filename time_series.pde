@@ -35,15 +35,6 @@ void setup() {
  size(800, 800);
  background(255);
  frameRate(frame_rate);
- //noStroke();
- //noFill();
- //noLoop();
-
-
-  
-//drawSerie(100, WIDTH/2, WIDTH/2-50, 69);
-
-
 }
 
 
@@ -93,6 +84,4 @@ void draw(){
   rect(0, 0, 200, 50);
   fill(0);
   text(multiplier, 30, 30);
-  //fill(255);
-
 }
