@@ -1,49 +1,91 @@
+int WIDTH = 800;
+int HEIGHT = 800;
+
+// This script calculate a time serie of n(i)=x*i
+// for x=2 we have  n(i)=2*i  >>>>   n(i)= {2, 4, 6, 8, 10, 12, }
+
+// For exapmle these configurations show amazing results
+// 
+//float serie_size = 400;
+//float multiplier=300;
+//float step = 0.05;
+//float frame_rate = 30;
+
+//or
+
+//float serie_size = 400;
+//float multiplier=7;
+//float step = 3;
+//float frame_rate = 3;
+
+
+float serie_size = 400;
+float multiplier=7;
+float step = 3;
+float frame_rate = 3;
+
 void setup() {
  size(800, 800);
  background(255);
+ frameRate(frame_rate);
  //noStroke();
  //noFill();
- noLoop();
- 
- drawSerie(400, 400, 300, 68);
+ //noLoop();
+
+
+  
+//drawSerie(100, WIDTH/2, WIDTH/2-50, 69);
+
+
 }
 
 
-float[] targetPoint(float slices_num, float multiplier){
- float[] target_point = new float[int(slices_num)];
- for (int i=1; i < slices_num; i++){
-   target_point[i] = i * multiplier % slices_num;
- }
- return target_point;
-}
+float[][] drawSerie(float serie_size, int center_point, float radius, float multiplier){
+  
+  float[] target_point = new float[int(serie_size)];
+  float[][] coordinate = new float[int(serie_size)][2];
 
-
-float[][] drawSerie(float slices_num, int center_point, int radius, float multiplier){
-  float[] target_point = new float[int(slices_num)];
-  float[][] coordinate = new float[int(slices_num)][2];
-  float x_component, y_component;
-//  float current_x = center_point, current_y=center_point;
   // The size of each slice in degrees
   float slice_angle;
   circle(center_point, center_point, radius*2);
-  for (int i=0; i < slices_num; i++){
-    //int target_num = timeSerie(10, i);
-    target_point[i] = targetPoint(slices_num, multiplier)[i];
-    print("target number" + i + " = "+ target_point[i] +"  |  ");
-    slice_angle = (360/slices_num) * i;
-    print("angle" + slice_angle +"  |  ");
-    x_component = cos(radians(slice_angle))*radius + center_point;
-    y_component = sin(radians(slice_angle))*radius + center_point;
+  
+  for (int i=0; i < serie_size; i++){
+    // calculate the target point of all the numbers
+    target_point[i]= i * multiplier % serie_size;
+    //print("target number" + i + " = "+ target_point[i] +"  |  ");
     
-    coordinate[i][0] = x_component;
-    coordinate[i][1] = y_component;
-    println(" x = " + coordinate[i][1]);
-    point(coordinate[i][0],coordinate[i][1]);
-
+    // the arc angle of the slice
+    slice_angle = (360/serie_size) * i;
+    //print("angle" + slice_angle +"  |  ");
+    
+    // x and y coordinates of all points on the circle
+    coordinate[i][0] = cos(radians(slice_angle))*radius + center_point;
+    coordinate[i][1] = sin(radians(slice_angle))*radius + center_point;
+    //println(" x = " + coordinate[i][1]);
   }
-  for(int i=0; i<slices_num; i++){
+  
+  // draws the lines between initial and target points
+  for(int i=0; i<serie_size; i++){
       line(coordinate[i][0],coordinate[i][1],coordinate[int(target_point[i])][0],coordinate[int(target_point[i])][1]);
   }
-
+  
   return coordinate;
+}
+
+
+void draw(){
+  //float step=11;
+  multiplier = multiplier + step;
+  fill(255);
+
+  stroke(0);
+  drawSerie(serie_size, WIDTH/2, WIDTH/2-100, multiplier);
+  textSize(32);
+
+  noStroke();
+  rect(0, 0, 200, 50);
+  fill(0);
+  text(multiplier, 30, 30);
+  //fill(255);
+
 }
